@@ -6,10 +6,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
 @EnableJpaAuditing
-public class NexuschatBackendAppApplication {
+public class NexuschatApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(NexuschatBackendAppApplication.class, args);
+        SpringApplication.run(NexuschatApplication.class, args);
     }
 
 }
