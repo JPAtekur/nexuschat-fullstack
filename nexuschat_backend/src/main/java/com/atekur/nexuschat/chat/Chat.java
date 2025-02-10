@@ -22,6 +22,10 @@ import static jakarta.persistence.GenerationType.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "chat")
+@NamedQuery(name = ChatConstants.FIND_CHAT_BY_SENDER_ID,
+            query = "SELECT c FROM Chat c WHERE c.sender.id = :senderId OR c.recipient.id = :senderId")
+@NamedQuery(name = ChatConstants.FIND_CHAT_BY_SENDER_ID_AND_RECEIVER_ID,
+            query = "SELECT DISTINCT c FROM Chat c WHERE (c.sender.id = :senderId AND c.recipient.id = :recipientId) OR (c.sender.id = :recipient.id AND c.recipient.id = :senderId)")
 public class Chat extends BaseAuditingEntity {
 
     @Id
