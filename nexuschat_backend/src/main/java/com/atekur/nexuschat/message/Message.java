@@ -39,4 +39,5 @@ public class Message extends BaseAuditingEntity {
     @ManyToOne
     @JoinColumn(name = "chat_id")
     private Chat chat;
+    private String mediaFilePath;
 }
