@@ -1,5 +1,6 @@
 package com.atekur.nexuschat.message;
 
+import com.atekur.nexuschat.file.FileUtils;
 import lombok.*;
 
 @Getter
@@ -18,6 +19,7 @@ public class MessageMapper {
                 .state(message.getState())
                 .type(message.getType())
                 .createdAt(message.getCreatedDate())
+                .media(FileUtils.readFileFromLocation(message.getMediaFilePath()))
                 .build();
     }
 }
