@@ -1,6 +1,7 @@
 package com.atekur.nexuschat.chat;
 
 import com.atekur.nexuschat.common.StringResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/chats")
 @RequiredArgsConstructor
+@Tag(name = "Chat")
 public class ChatController {
 
     private ChatService chatService;

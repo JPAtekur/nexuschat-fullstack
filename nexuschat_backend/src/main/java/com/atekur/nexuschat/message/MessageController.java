@@ -1,5 +1,7 @@
 package com.atekur.nexuschat.message;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/messages")
 @RequiredArgsConstructor
+@Tag(name = "Message")
 public class MessageController {
 
     private final MessageService messageService;
@@ -24,9 +27,11 @@ public class MessageController {
 
     @PostMapping(value = "/upload-media", consumes = "multipart/form-data")
     @ResponseStatus(HttpStatus.CREATED)
-    public void uploadMediaMessage(@RequestParam("file") MultipartFile file,
-                                   @RequestParam("chat-id") String chatId,
-                                   Authentication authentication) {
+    public void uploadMediaMessage(
+            @Parameter()
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("chat-id") String chatId,
+            Authentication authentication) {
         messageService.uploadMediaMessage(chatId, file, authentication);
     }
 
