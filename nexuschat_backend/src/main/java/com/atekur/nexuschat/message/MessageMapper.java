@@ -1,22 +1,19 @@
 package com.atekur.nexuschat.message;
 
 import com.atekur.nexuschat.file.FileUtils;
-import lombok.*;
+import org.springframework.stereotype.Service;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@Builder
+
+@Service
 public class MessageMapper {
-
     public MessageResponse toMessageResponse(Message message) {
         return MessageResponse.builder()
                 .id(message.getId())
                 .content(message.getContent())
                 .senderId(message.getSenderId())
                 .receiverId(message.getReceiverId())
-                .state(message.getState())
                 .type(message.getType())
+                .state(message.getState())
                 .createdAt(message.getCreatedDate())
                 .media(FileUtils.readFileFromLocation(message.getMediaFilePath()))
                 .build();

@@ -10,7 +10,7 @@ describe('ChatListComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ChatListComponent]
     })
-      .compileComponents();
+    .compileComponents();
 
     fixture = TestBed.createComponent(ChatListComponent);
     component = fixture.componentInstance;

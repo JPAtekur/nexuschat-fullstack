@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/v1/users")
+@RequiredArgsConstructor
 @Tag(name = "User")
 public class UserController {
 
@@ -20,6 +20,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserResponse>> getAllUsers(Authentication authentication) {
-        return ResponseEntity.ok(userService.getAllUsersExceptSelf(authentication));
+        return ResponseEntity.ok(userService.finAllUsersExceptSelf(authentication));
     }
 }
+

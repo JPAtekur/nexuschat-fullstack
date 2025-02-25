@@ -60,7 +60,7 @@
         "tags": [
           "Message"
         ],
-        "operationId": "uploadMediaMessage",
+        "operationId": "uploadMedia",
         "parameters": [
           {
             "name": "chat-id",
@@ -183,7 +183,7 @@
         "tags": [
           "Message"
         ],
-        "operationId": "findChatMessages",
+        "operationId": "getAllMessages",
         "parameters": [
           {
             "name": "chat-id",
@@ -231,8 +231,8 @@
             "enum": [
               "TEXT",
               "IMAGE",
-              "AUDIO",
-              "VIDEO"
+              "VIDEO",
+              "AUDIO"
             ]
           },
           "chatId": {
@@ -282,27 +282,31 @@
           "content": {
             "type": "string"
           },
+          "type": {
+            "type": "string",
+            "enum": [
+              "TEXT",
+              "IMAGE",
+              "VIDEO",
+              "AUDIO"
+            ]
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "SENT",
+              "SEEN"
+            ]
+          },
           "senderId": {
             "type": "string"
           },
           "receiverId": {
             "type": "string"
           },
-          "type": {
+          "createdAt": {
             "type": "string",
-            "enum": [
-              "TEXT",
-              "IMAGE",
-              "AUDIO",
-              "VIDEO"
-            ]
-          },
-          "state": {
-            "type": "string",
-            "enum": [
-              "SEEN",
-              "SENT"
-            ]
+            "format": "date-time"
           },
           "media": {
             "type": "array",
@@ -310,10 +314,6 @@
               "type": "string",
               "format": "byte"
             }
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
           }
         }
       },

@@ -9,6 +9,6 @@ export interface MessageResponse {
   media?: Array<string>;
   receiverId?: string;
   senderId?: string;
-  state?: 'SEEN' | 'SENT';
-  type?: 'TEXT' | 'IMAGE' | 'AUDIO' | 'VIDEO';
+  state?: 'SENT' | 'SEEN';
+  type?: 'TEXT' | 'IMAGE' | 'VIDEO' | 'AUDIO';
 }

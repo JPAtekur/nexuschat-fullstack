@@ -1,0 +1,97 @@
+{
+  "hash": "92036369",
+  "configHash": "7afb387d",
+  "lockfileHash": "aa395fda",
+  "browserHash": "b5d1a13e",
+  "optimized": {
+    "@angular/common": {
+      "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
+      "file": "@angular_common.js",
+      "fileHash": "9030c710",
+      "needsInterop": false
+    },
+    "@angular/common/http": {
+      "src": "../../../../../../node_modules/@angular/common/fesm2022/http.mjs",
+      "file": "@angular_common_http.js",
+      "fileHash": "ae49497c",
+      "needsInterop": false
+    },
+    "@angular/core": {
+      "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
+      "file": "@angular_core.js",
+      "fileHash": "115cbcc3",
+      "needsInterop": false
+    },
+    "@angular/forms": {
+      "src": "../../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
+      "file": "@angular_forms.js",
+      "fileHash": "b51f9cad",
+      "needsInterop": false
+    },
+    "@angular/platform-browser": {
+      "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
+      "file": "@angular_platform-browser.js",
+      "fileHash": "5979ffdd",
+      "needsInterop": false
+    },
+    "@angular/router": {
+      "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
+      "file": "@angular_router.js",
+      "fileHash": "fbefc077",
+      "needsInterop": false
+    },
+    "@ctrl/ngx-emoji-mart": {
+      "src": "../../../../../../node_modules/@ctrl/ngx-emoji-mart/fesm2022/ctrl-ngx-emoji-mart.mjs",
+      "file": "@ctrl_ngx-emoji-mart.js",
+      "fileHash": "269f1299",
+      "needsInterop": false
+    },
+    "keycloak-js": {
+      "src": "../../../../../../node_modules/keycloak-js/lib/keycloak.js",
+      "file": "keycloak-js.js",
+      "fileHash": "20e159b6",
+      "needsInterop": false
+    },
+    "rxjs/operators": {
+      "src": "../../../../../../node_modules/rxjs/dist/esm5/operators/index.js",
+      "file": "rxjs_operators.js",
+      "fileHash": "77c28887",
+      "needsInterop": false
+    },
+    "sockjs-client": {
+      "src": "../../../../../../node_modules/sockjs-client/lib/entry.js",
+      "file": "sockjs-client.js",
+      "fileHash": "5e2d3529",
+      "needsInterop": true
+    },
+    "stompjs": {
+      "src": "../../../../../../node_modules/stompjs/index.js",
+      "file": "stompjs.js",
+      "fileHash": "ce586361",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "chunk-FXAOCWYL": {
+      "file": "chunk-FXAOCWYL.js"
+    },
+    "chunk-VRF3SG4Q": {
+      "file": "chunk-VRF3SG4Q.js"
+    },
+    "chunk-2547VSKD": {
+      "file": "chunk-2547VSKD.js"
+    },
+    "chunk-WCJ25AXF": {
+      "file": "chunk-WCJ25AXF.js"
+    },
+    "chunk-QC2LF6Q2": {
+      "file": "chunk-QC2LF6Q2.js"
+    },
+    "chunk-CXI26FA2": {
+      "file": "chunk-CXI26FA2.js"
+    },
+    "chunk-3OV72XIM": {
+      "file": "chunk-3OV72XIM.js"
+    }
+  }
+}

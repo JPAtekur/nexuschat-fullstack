@@ -6,35 +6,40 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.security.SecureRandom;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
 public class ChatService {
 
-    private ChatRepository chatRepository;
-    private UserRepository userRepository;
-    private ChatMapper chatMapper;
+    private final ChatRepository chatRepository;
+    private final UserRepository userRepository;
+    private final ChatMapper mapper;
 
-    public List<ChatResponse> getChatsByReceiverId(Authentication currentUser){
+    @Transactional(readOnly = true)
+    public List<ChatResponse> getChatsByReceiverId(Authentication currentUser) {
         final String userId = currentUser.getName();
         return chatRepository.findChatsBySenderId(userId)
                 .stream()
-                .map(c -> chatMapper.toChatResponse(c, userId))
-                .collect(Collectors.toList());
+                .map(c -> mapper.toChatResponse(c, userId))
+                .toList();
     }
 
-    public String createChat(String senderId, String receiverId){
-        Optional<Chat> existingChat = chatRepository.findChatBySenderAndReceiver(senderId, receiverId);
+    public String createChat(String senderId, String receiverId) {
 
-        User sender = userRepository.findUserByPublicId(senderId)
-                .orElseThrow(() -> new EntityNotFoundException("User with id " + senderId + " not found"));
-        User receiver = userRepository.findUserByPublicId(receiverId)
-                .orElseThrow(() -> new EntityNotFoundException("User with id " + receiverId + " not found"));
+        Optional<Chat> existingChat = chatRepository.findChatByReceiverAndSender(senderId, receiverId);
+        if (existingChat.isPresent()) {
+            return existingChat.get().getId();
+        }
+
+        User sender = userRepository.findByPublicId(senderId)
+                .orElseThrow(() ->  new EntityNotFoundException("User with id " + senderId + " not found"));
+        User receiver = userRepository.findByPublicId(receiverId)
+                .orElseThrow(() ->  new EntityNotFoundException("User with id " + receiverId + " not found"));
 
         Chat chat = new Chat();
         chat.setSender(sender);
