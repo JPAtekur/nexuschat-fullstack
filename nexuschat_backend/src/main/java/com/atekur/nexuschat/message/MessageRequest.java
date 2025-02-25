@@ -2,8 +2,8 @@ package com.atekur.nexuschat.message;
 
 import lombok.*;
 
-@Setter
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -14,5 +14,4 @@ public class MessageRequest {
     private String receiverId;
     private MessageType type;
     private String chatId;
-
 }

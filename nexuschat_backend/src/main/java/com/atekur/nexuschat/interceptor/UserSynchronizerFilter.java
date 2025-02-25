@@ -19,16 +19,19 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class UserSynchronizerFilter extends OncePerRequestFilter {
 
-    private UserSynchronizer userSynchronizer;
+    private final UserSynchronizer userSynchronizer;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
-        if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)){
-            JwtAuthenticationToken token = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-            userSynchronizer.synchronizedWithIdp(token.getToken());
+
+        if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
+            JwtAuthenticationToken token = ((JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication());
+
+            userSynchronizer.synchronizeWithIdp(token.getToken());
         }
+
         filterChain.doFilter(request, response);
     }
 }

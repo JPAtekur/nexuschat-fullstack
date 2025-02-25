@@ -1,67 +1,73 @@
 package com.atekur.nexuschat.file;
 
+import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.IIOException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static java.io.File.separator;
 import static java.lang.System.currentTimeMillis;
 
+
 @Service
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class FileService {
 
     @Value("${application.file.uploads.media-output-path}")
     private String fileUploadPath;
 
-    public String saveFile(@NonNull MultipartFile sourceFile, @NonNull String senderId) {
-        final String fileUploadSubPath = "users" + separator + senderId;
-
+    public String saveFile(
+            @Nonnull MultipartFile sourceFile,
+            @Nonnull String userId
+    ) {
+        final String fileUploadSubPath = "users" + separator + userId;
         return uploadFile(sourceFile, fileUploadSubPath);
     }
 
-    private String uploadFile(@NonNull MultipartFile sourceFile, @NonNull String fileUploadSubPath) {
-
+    private String uploadFile(
+            @Nonnull MultipartFile sourceFile,
+            @Nonnull String fileUploadSubPath
+    ) {
         final String finalUploadPath = fileUploadPath + separator + fileUploadSubPath;
         File targetFolder = new File(finalUploadPath);
+
         if (!targetFolder.exists()) {
             boolean folderCreated = targetFolder.mkdirs();
             if (!folderCreated) {
-                log.error("Failed to create folder: {}", targetFolder.getAbsolutePath());
+                log.warn("Failed to create the target folder: " + targetFolder);
                 return null;
             }
         }
         final String fileExtension = getFileExtension(sourceFile.getOriginalFilename());
-        final String targetFilePath = fileUploadPath + separator + currentTimeMillis() + fileExtension;
-        Path targetPath = Path.of(targetFilePath);
+        String targetFilePath = finalUploadPath + separator + currentTimeMillis() + "." + fileExtension;
+        Path targetPath = Paths.get(targetFilePath);
         try {
             Files.write(targetPath, sourceFile.getBytes());
-            log.info("File saved successfully: {}", targetFilePath);
+            log.info("File saved to: " + targetFilePath);
             return targetFilePath;
         } catch (IOException e) {
-            log.error("Failed to save file: {}", targetFilePath, e);
+            log.error("File was not saved", e);
         }
         return null;
     }
 
-    private String getFileExtension(String originalFilename) {
-        if (originalFilename == null || originalFilename.isEmpty()) {
+    private String getFileExtension(String fileName) {
+        if (fileName == null || fileName.isEmpty()) {
             return "";
         }
-        int lastIndexOf = originalFilename.lastIndexOf(".");
-        if (lastIndexOf == -1) {
+        int lastDotIndex = fileName.lastIndexOf(".");
+        if (lastDotIndex == -1) {
             return "";
         }
-        return originalFilename.substring(lastIndexOf).toLowerCase();
+        return fileName.substring(lastDotIndex + 1).toLowerCase();
     }
 }

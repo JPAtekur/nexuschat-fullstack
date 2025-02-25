@@ -1,7 +1,7 @@
 package com.atekur.nexuschat.file;
 
-import io.micrometer.common.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,18 +11,17 @@ import java.nio.file.Path;
 @Slf4j
 public class FileUtils {
 
-    private FileUtils() {
-    }
+    private FileUtils() {}
 
-    public static byte[] readFileFromLocation(String fileurl){
-        if (StringUtils.isBlank(fileurl)) {
+    public static byte[] readFileFromLocation(String fileUrl) {
+        if (StringUtils.isBlank(fileUrl)) {
             return new byte[0];
         }
         try {
-            Path file = new File(fileurl).toPath();
-            return Files.readAllBytes(file);
+            Path filePath = new File(fileUrl).toPath();
+            return Files.readAllBytes(filePath);
         } catch (IOException e) {
-            log.error("Failed to read file from location: {}", fileurl, e);
+            log.warn("Nou file found in the path {}", fileUrl);
         }
         return new byte[0];
     }
