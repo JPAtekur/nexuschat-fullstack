@@ -1,18 +1,18 @@
-import { AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ChatListComponent } from '../../components/chat-list/chat-list.component';
-import { KeycloakService } from '../../utils/keycloak/keycloak.service';
-import { ChatResponse } from '../../services/models/chat-response';
-import { DatePipe } from '@angular/common';
-import { MessageService } from '../../services/services/message.service';
-import { MessageResponse } from '../../services/models/message-response';
+import {AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ChatListComponent} from '../../components/chat-list/chat-list.component';
+import {KeycloakService} from '../../utils/keycloak/keycloak.service';
+import {ChatResponse} from '../../services/models/chat-response';
+import {DatePipe} from '@angular/common';
+import {MessageService} from '../../services/services/message.service';
+import {MessageResponse} from '../../services/models/message-response';
 import * as Stomp from 'stompjs';
 import SockJS from 'sockjs-client';
-import { FormsModule } from '@angular/forms';
-import { MessageRequest } from '../../services/models/message-request';
-import { Notification } from './models/notification';
-import { ChatService } from '../../services/services/chat.service';
-import { PickerComponent } from '@ctrl/ngx-emoji-mart';
-import { EmojiData } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import {FormsModule} from '@angular/forms';
+import {MessageRequest} from '../../services/models/message-request';
+import {Notification} from './models/notification';
+import {ChatService} from '../../services/services/chat.service';
+import {PickerComponent} from '@ctrl/ngx-emoji-mart';
+import {EmojiData} from '@ctrl/ngx-emoji-mart/ngx-emoji';
 
 @Component({
   selector: 'app-main',
@@ -125,7 +125,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewChecked {
 
           const mediaLines = reader.result.toString().split(',')[1];
 
-          this.messageService.uploadMediaMessage({
+          this.messageService.uploadMedia({
             'chat-id': this.selectedChat.id as string,
             body: {
               file: file
@@ -177,7 +177,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   private getAllChatMessages(chatId: string) {
-    this.messageService.findChatMessages({
+    this.messageService.getAllMessages({
       'chat-id': chatId
     }).subscribe({
       next: (messages) => {
@@ -191,7 +191,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewChecked {
       let ws = new SockJS('http://localhost:8080/ws');
       this.socketClient = Stomp.over(ws);
       const subUrl = `/user/${this.keycloakService.keycloak.tokenParsed?.sub}/chat`;
-      this.socketClient.connect({ 'Authorization': 'Bearer ' + this.keycloakService.keycloak.token },
+      this.socketClient.connect({'Authorization': 'Bearer ' + this.keycloakService.keycloak.token},
         () => {
           this.notificationSubscription = this.socketClient.subscribe(subUrl,
             (message: any) => {
@@ -200,7 +200,7 @@ export class MainComponent implements OnInit, OnDestroy, AfterViewChecked {
 
             },
             () => console.error('Error while connecting to webSocket')
-          );
+            );
         }
       );
     }

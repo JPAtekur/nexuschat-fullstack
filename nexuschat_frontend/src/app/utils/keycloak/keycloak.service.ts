@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import Keycloak from 'keycloak-js';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +9,12 @@ export class KeycloakService {
 
   private _keycloak: Keycloak | undefined;
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) {
+  }
 
-  get keycloak(): Keycloak{
+  get keycloak() {
     if (!this._keycloak) {
       this._keycloak = new Keycloak({
         url: 'http://localhost:8585',
@@ -18,16 +22,18 @@ export class KeycloakService {
         clientId: 'nexus_chat_app'
       });
     }
-  return this._keycloak;
+    return this._keycloak;
   }
 
-  async init(): Promise<void> {
-    const authenticated: boolean = await this.keycloak.init({
-      onLoad: 'login-required'
+  async init() {
+    const authenticated = await this.keycloak.init({
+      onLoad: 'login-required',
+      // silentCheckSsoRedirectUri: `${window.location.origin}/silent-check-sso.html`,
+      // checkLoginIframe: false
     });
   }
 
-  async login(): Promise<void> {
+  async login() {
     await this.keycloak.login();
   }
 
@@ -43,12 +49,11 @@ export class KeycloakService {
     return this.keycloak.tokenParsed?.['name'] as string;
   }
 
-  logout(): Promise<void> {
-    return this.keycloak.login({redirectUri: 'http://localhost:4200'});
+  logout() {
+    return this.keycloak.logout({redirectUri: 'http://localhost:4200'});
   }
 
-  accountManagement(): Promise<void> {
+  accountManagement() {
     return this.keycloak.accountManagement();
   }
-
 }

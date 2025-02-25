@@ -11,15 +11,15 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
-import { findChatMessages } from '../fn/message/find-chat-messages';
-import { FindChatMessages$Params } from '../fn/message/find-chat-messages';
+import { getAllMessages } from '../fn/message/get-all-messages';
+import { GetAllMessages$Params } from '../fn/message/get-all-messages';
 import { MessageResponse } from '../models/message-response';
 import { saveMessage } from '../fn/message/save-message';
 import { SaveMessage$Params } from '../fn/message/save-message';
 import { setMessageToSeen } from '../fn/message/set-message-to-seen';
 import { SetMessageToSeen$Params } from '../fn/message/set-message-to-seen';
-import { uploadMediaMessage } from '../fn/message/upload-media-message';
-import { UploadMediaMessage$Params } from '../fn/message/upload-media-message';
+import { uploadMedia } from '../fn/message/upload-media';
+import { UploadMedia$Params } from '../fn/message/upload-media';
 
 @Injectable({ providedIn: 'root' })
 export class MessageService extends BaseService {
@@ -77,52 +77,52 @@ export class MessageService extends BaseService {
     );
   }
 
-  /** Path part for operation `uploadMediaMessage()` */
-  static readonly UploadMediaMessagePath = '/api/v1/messages/upload-media';
+  /** Path part for operation `uploadMedia()` */
+  static readonly UploadMediaPath = '/api/v1/messages/upload-media';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `uploadMediaMessage()` instead.
+   * To access only the response body, use `uploadMedia()` instead.
    *
    * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
    */
-  uploadMediaMessage$Response(params: UploadMediaMessage$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-    return uploadMediaMessage(this.http, this.rootUrl, params, context);
+  uploadMedia$Response(params: UploadMedia$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return uploadMedia(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `uploadMediaMessage$Response()` instead.
+   * To access the full response (for headers, for example), `uploadMedia$Response()` instead.
    *
    * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
    */
-  uploadMediaMessage(params: UploadMediaMessage$Params, context?: HttpContext): Observable<void> {
-    return this.uploadMediaMessage$Response(params, context).pipe(
+  uploadMedia(params: UploadMedia$Params, context?: HttpContext): Observable<void> {
+    return this.uploadMedia$Response(params, context).pipe(
       map((r: StrictHttpResponse<void>): void => r.body)
     );
   }
 
-  /** Path part for operation `findChatMessages()` */
-  static readonly FindChatMessagesPath = '/api/v1/messages/chat/{chat-id}';
+  /** Path part for operation `getAllMessages()` */
+  static readonly GetAllMessagesPath = '/api/v1/messages/chat/{chat-id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `findChatMessages()` instead.
+   * To access only the response body, use `getAllMessages()` instead.
    *
    * This method doesn't expect any request body.
    */
-  findChatMessages$Response(params: FindChatMessages$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<MessageResponse>>> {
-    return findChatMessages(this.http, this.rootUrl, params, context);
+  getAllMessages$Response(params: GetAllMessages$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<MessageResponse>>> {
+    return getAllMessages(this.http, this.rootUrl, params, context);
   }
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `findChatMessages$Response()` instead.
+   * To access the full response (for headers, for example), `getAllMessages$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  findChatMessages(params: FindChatMessages$Params, context?: HttpContext): Observable<Array<MessageResponse>> {
-    return this.findChatMessages$Response(params, context).pipe(
+  getAllMessages(params: GetAllMessages$Params, context?: HttpContext): Observable<Array<MessageResponse>> {
+    return this.getAllMessages$Response(params, context).pipe(
       map((r: StrictHttpResponse<Array<MessageResponse>>): Array<MessageResponse> => r.body)
     );
   }
